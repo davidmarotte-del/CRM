@@ -1,0 +1,231 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  password   String
+  role       String   @default("sales_rep")
+  phone      String?
+  department String?
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  assignedDeals  Deal[]
+  assignedOrders Order[]
+  activities     Activity[]
+  createdCustomers Customer[]
+}
+
+model Customer {
+  id          String   @id @default(cuid())
+  name        String
+  email       String?
+  phone       String?
+  address     String?
+  city        String?
+  state       String?
+  zipCode     String?
+  country     String   @default("US")
+  industry    String?
+  website     String?
+  status      String   @default("active")
+  creditLimit Float?
+  notes       String?
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  contacts   Contact[]
+  deals      Deal[]
+  orders     Order[]
+  activities Activity[]
+}
+
+model Supplier {
+  id           String   @id @default(cuid())
+  name         String
+  email        String?
+  phone        String?
+  address      String?
+  city         String?
+  state        String?
+  zipCode      String?
+  country      String   @default("US")
+  website      String?
+  status       String   @default("active")
+  paymentTerms String?
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  contacts       Contact[]
+  products       Product[]
+  purchaseOrders PurchaseOrder[]
+  activities     Activity[]
+}
+
+model Contact {
+  id         String    @id @default(cuid())
+  firstName  String
+  lastName   String
+  email      String?
+  phone      String?
+  title      String?
+  isPrimary  Boolean   @default(false)
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  supplierId String?
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  sku         String    @unique
+  name        String
+  description String?
+  category    String?
+  unit        String    @default("each")
+  costPrice   Float     @default(0)
+  salePrice   Float     @default(0)
+  stockQty    Int       @default(0)
+  reorderQty  Int       @default(0)
+  supplierId  String?
+  supplier    Supplier? @relation(fields: [supplierId], references: [id])
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  orderItems         OrderItem[]
+  purchaseOrderItems PurchaseOrderItem[]
+  dealItems          DealItem[]
+}
+
+model Deal {
+  id            String    @id @default(cuid())
+  title         String
+  stage         String    @default("prospecting")
+  value         Float     @default(0)
+  probability   Int       @default(0)
+  expectedClose DateTime?
+  customerId    String
+  customer      Customer  @relation(fields: [customerId], references: [id])
+  assignedToId  String?
+  assignedTo    User?     @relation(fields: [assignedToId], references: [id])
+  notes         String?
+  lostReason    String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  dealItems  DealItem[]
+  activities Activity[]
+}
+
+model DealItem {
+  id        String  @id @default(cuid())
+  dealId    String
+  deal      Deal    @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int     @default(1)
+  unitPrice Float
+}
+
+model Order {
+  id           String    @id @default(cuid())
+  orderNumber  String    @unique
+  status       String    @default("pending")
+  customerId   String
+  customer     Customer  @relation(fields: [customerId], references: [id])
+  assignedToId String?
+  assignedTo   User?     @relation(fields: [assignedToId], references: [id])
+  orderDate    DateTime  @default(now())
+  deliveryDate DateTime?
+  shippedDate  DateTime?
+  subtotal     Float     @default(0)
+  tax          Float     @default(0)
+  discount     Float     @default(0)
+  total        Float     @default(0)
+  notes        String?
+  shippingAddr String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  items      OrderItem[]
+  activities Activity[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  unitPrice Float
+  discount  Float   @default(0)
+  total     Float
+}
+
+model PurchaseOrder {
+  id           String    @id @default(cuid())
+  poNumber     String    @unique
+  status       String    @default("draft")
+  supplierId   String
+  supplier     Supplier  @relation(fields: [supplierId], references: [id])
+  orderDate    DateTime  @default(now())
+  expectedDate DateTime?
+  receivedDate DateTime?
+  subtotal     Float     @default(0)
+  tax          Float     @default(0)
+  total        Float     @default(0)
+  notes        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  items PurchaseOrderItem[]
+}
+
+model PurchaseOrderItem {
+  id              String        @id @default(cuid())
+  purchaseOrderId String
+  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  productId       String
+  product         Product       @relation(fields: [productId], references: [id])
+  quantity        Int
+  unitCost        Float
+  total           Float
+}
+
+model Activity {
+  id         String    @id @default(cuid())
+  type       String
+  subject    String
+  body       String?
+  status     String    @default("open")
+  dueDate    DateTime?
+  doneAt     DateTime?
+  userId     String?
+  user       User?     @relation(fields: [userId], references: [id])
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  supplierId String?
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+  dealId     String?
+  deal       Deal?     @relation(fields: [dealId], references: [id])
+  orderId    String?
+  order      Order?    @relation(fields: [orderId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
