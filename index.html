@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phantom Power | Family Office</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-bg: #0a0a0f;
+      --color-surface: #12121a;
+      --color-border: #1e1e2e;
+      --color-text: #e4e4e7;
+      --color-text-muted: #8b8b9e;
+      --color-accent: #a78bfa;
+      --color-accent-dim: rgba(167, 139, 250, 0.1);
+      --color-white: #ffffff;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-white);
+    }
+
+    .logo span {
+      color: var(--color-accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-white);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-text);
+      transition: 0.3s;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 50% 50%, rgba(167, 139, 250, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--color-white);
+      max-width: 800px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 1.125rem;
+      color: var(--color-text-muted);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 0.875rem 2.25rem;
+      background: var(--color-accent);
+      color: var(--color-bg);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(167, 139, 250, 0.3);
+    }
+
+    /* ── Sections ── */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--color-white);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      color: var(--color-text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── Services Grid ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .service-card:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-4px);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: var(--color-accent-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--color-accent);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--color-white);
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* ── About ── */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      color: var(--color-text-muted);
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-box {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      text-align: center;
+    }
+
+    .stat-box .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-box .label {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Contact ── */
+    #contact {
+      text-align: center;
+    }
+
+    .contact-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      padding: 3.5rem 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-card p {
+      color: var(--color-text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .contact-email {
+      display: inline-block;
+      padding: 0.875rem 2.25rem;
+      border: 1px solid var(--color-accent);
+      color: var(--color-accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .contact-email:hover {
+      background: var(--color-accent);
+      color: var(--color-bg);
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: rgba(10, 10, 15, 0.95);
+        backdrop-filter: blur(12px);
+        padding: 1.5rem 2rem;
+        gap: 1.25rem;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">Phantom <span>Power</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-tag">Family Office</p>
+    <h1>Strategic Wealth. Quiet Strength.</h1>
+    <p>Phantom Power provides bespoke consulting, investment, and wealth management services for families who value discretion and long-term vision.</p>
+    <a href="#services" class="hero-cta">Explore Our Services</a>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <p class="section-label">What We Do</p>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-subtitle">Tailored strategies built around your family's unique goals, timeline, and values.</p>
+
+    <div class="services-grid">
+      <!-- Consulting -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        </div>
+        <h3>Consulting</h3>
+        <p>Strategic advisory for complex family structures, governance frameworks, succession planning, and operational efficiency. We help you make informed decisions with clarity and confidence.</p>
+      </div>
+
+      <!-- Investment -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <h3>Investment</h3>
+        <p>Disciplined portfolio construction across public markets, private equity, venture, and real assets. We source and manage opportunities aligned with your risk tolerance and return objectives.</p>
+      </div>
+
+      <!-- Wealth Management -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 3h-8l-2 4h12z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+        </div>
+        <h3>Wealth Management</h3>
+        <p>Comprehensive stewardship of your family's financial life, including tax planning, estate structuring, liquidity management, and multi-generational wealth preservation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <p class="section-label">Who We Are</p>
+    <h2 class="section-title">Built on Trust</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <p>Phantom Power was founded on the belief that true financial stewardship requires more than expertise. It demands discretion, patience, and an unwavering commitment to the families we serve.</p>
+        <p>We operate as an extension of your family, providing institutional-grade capabilities with the personal attention that only a dedicated family office can deliver.</p>
+      </div>
+      <div class="stats">
+        <div class="stat-box">
+          <span class="number">20+</span>
+          <span class="label">Years of Experience</span>
+        </div>
+        <div class="stat-box">
+          <span class="number">100%</span>
+          <span class="label">Client Retention</span>
+        </div>
+        <div class="stat-box">
+          <span class="number">360&deg;</span>
+          <span class="label">Holistic Approach</span>
+        </div>
+        <div class="stat-box">
+          <span class="number">24/7</span>
+          <span class="label">Dedicated Access</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="contact-card">
+      <p class="section-label">Get in Touch</p>
+      <h2 class="section-title">Start a Conversation</h2>
+      <p>We work with a select number of families. If you're exploring how a dedicated family office can serve your goals, we'd welcome the opportunity to connect.</p>
+      <a href="mailto:contact@phantompower.com" class="contact-email">contact@phantompower.com</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 Phantom Power. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('menuToggle').addEventListener('click', function () {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        document.getElementById('navLinks').classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
