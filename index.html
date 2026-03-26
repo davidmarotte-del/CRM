@@ -8,372 +8,83 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --color-bg: #0a0a0f;
-      --color-surface: #12121a;
-      --color-border: #1e1e2e;
-      --color-text: #e4e4e7;
-      --color-text-muted: #8b8b9e;
-      --color-accent: #a78bfa;
-      --color-accent-dim: rgba(167, 139, 250, 0.1);
-      --color-white: #ffffff;
+      --color-bg: #0a0a0f; --color-surface: #12121a; --color-border: #1e1e2e;
+      --color-text: #e4e4e7; --color-text-muted: #8b8b9e; --color-accent: #a78bfa;
+      --color-accent-dim: rgba(167, 139, 250, 0.1); --color-white: #ffffff;
     }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 100;
-      padding: 1.25rem 2rem;
-      background: rgba(10, 10, 15, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--color-border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-white);
-    }
-
-    .logo span {
-      color: var(--color-accent);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--color-text-muted);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover {
-      color: var(--color-white);
-    }
-
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .menu-toggle span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--color-text);
-      transition: 0.3s;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 6rem 2rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(ellipse at 50% 50%, rgba(167, 139, 250, 0.06) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .hero-tag {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 700;
-      line-height: 1.1;
-      color: var(--color-white);
-      max-width: 800px;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero p {
-      font-size: 1.125rem;
-      color: var(--color-text-muted);
-      max-width: 560px;
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-cta {
-      display: inline-block;
-      padding: 0.875rem 2.25rem;
-      background: var(--color-accent);
-      color: var(--color-bg);
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      border-radius: 6px;
-      letter-spacing: 0.02em;
-      transition: transform 0.2s, box-shadow 0.3s;
-    }
-
-    .hero-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(167, 139, 250, 0.3);
-    }
-
-    section {
-      padding: 6rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      margin-bottom: 0.75rem;
-    }
-
-    .section-title {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      font-weight: 700;
-      color: var(--color-white);
-      margin-bottom: 1rem;
-    }
-
-    .section-subtitle {
-      color: var(--color-text-muted);
-      font-size: 1.05rem;
-      max-width: 600px;
-      margin-bottom: 3.5rem;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .service-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 12px;
-      padding: 2.5rem 2rem;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-
-    .service-card:hover {
-      border-color: var(--color-accent);
-      transform: translateY(-4px);
-    }
-
-    .service-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      background: var(--color-accent-dim);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .service-icon svg {
-      width: 24px;
-      height: 24px;
-      stroke: var(--color-accent);
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .service-card h3 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--color-white);
-      margin-bottom: 0.75rem;
-    }
-
-    .service-card p {
-      color: var(--color-text-muted);
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
-
-    .about-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .about-text p {
-      color: var(--color-text-muted);
-      margin-bottom: 1.25rem;
-      font-size: 1rem;
-      line-height: 1.8;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-
-    .stat-box {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 12px;
-      padding: 1.75rem;
-      text-align: center;
-    }
-
-    .stat-box .number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--color-accent);
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-
-    .stat-box .label {
-      font-size: 0.8rem;
-      color: var(--color-text-muted);
-      letter-spacing: 0.04em;
-    }
-
-    #contact {
-      text-align: center;
-    }
-
-    .contact-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 16px;
-      padding: 3.5rem 2rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .contact-card p {
-      color: var(--color-text-muted);
-      margin-bottom: 2rem;
-    }
-
-    .contact-email {
-      display: inline-block;
-      padding: 0.875rem 2.25rem;
-      border: 1px solid var(--color-accent);
-      color: var(--color-accent);
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .contact-email:hover {
-      background: var(--color-accent);
-      color: var(--color-bg);
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      border-top: 1px solid var(--color-border);
-      color: var(--color-text-muted);
-      font-size: 0.8rem;
-    }
-
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--color-bg); color: var(--color-text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 1.25rem 2rem; background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.25rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-white); }
+    .logo span { color: var(--color-accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--color-text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.04em; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--color-white); }
+    .menu-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .menu-toggle span { display: block; width: 24px; height: 2px; background: var(--color-text); transition: 0.3s; }
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 50% 50%, rgba(167, 139, 250, 0.06) 0%, transparent 60%); pointer-events: none; }
+    .hero-tag { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 1.5rem; }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.1; color: var(--color-white); max-width: 800px; margin-bottom: 1.5rem; }
+    .hero p { font-size: 1.125rem; color: var(--color-text-muted); max-width: 560px; margin-bottom: 2.5rem; }
+    .hero-cta { display: inline-block; padding: 0.875rem 2.25rem; background: var(--color-accent); color: var(--color-bg); font-weight: 600; font-size: 0.9rem; text-decoration: none; border-radius: 6px; letter-spacing: 0.02em; transition: transform 0.2s, box-shadow 0.3s; }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(167, 139, 250, 0.3); }
+    section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 0.75rem; }
+    .section-title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; color: var(--color-white); margin-bottom: 1rem; }
+    .section-subtitle { color: var(--color-text-muted); font-size: 1.05rem; max-width: 600px; margin-bottom: 3.5rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .service-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 2.5rem 2rem; transition: border-color 0.3s, transform 0.3s; }
+    .service-card:hover { border-color: var(--color-accent); transform: translateY(-4px); }
+    .service-icon { width: 48px; height: 48px; border-radius: 10px; background: var(--color-accent-dim); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
+    .service-icon svg { width: 24px; height: 24px; stroke: var(--color-accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .service-card h3 { font-size: 1.2rem; font-weight: 600; color: var(--color-white); margin-bottom: 0.75rem; }
+    .service-card p { color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.7; }
+    .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-text p { color: var(--color-text-muted); margin-bottom: 1.25rem; font-size: 1rem; line-height: 1.8; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .stat-box { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 1.75rem; text-align: center; }
+    .stat-box .number { font-size: 2rem; font-weight: 700; color: var(--color-accent); display: block; margin-bottom: 0.25rem; }
+    .stat-box .label { font-size: 0.8rem; color: var(--color-text-muted); letter-spacing: 0.04em; }
+    #contact { text-align: center; }
+    .contact-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 16px; padding: 3.5rem 2rem; max-width: 600px; margin: 0 auto; }
+    .contact-card p { color: var(--color-text-muted); margin-bottom: 2rem; }
+    .contact-email { display: inline-block; padding: 0.875rem 2.25rem; border: 1px solid var(--color-accent); color: var(--color-accent); font-weight: 600; font-size: 0.9rem; text-decoration: none; border-radius: 6px; transition: background 0.3s, color 0.3s; }
+    .contact-email:hover { background: var(--color-accent); color: var(--color-bg); }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3.5rem; }
+    .team-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 2.25rem 2rem; text-align: center; transition: border-color 0.3s, transform 0.3s; }
+    .team-card:hover { border-color: var(--color-accent); transform: translateY(-4px); }
+    .team-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--color-accent-dim); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; font-size: 1.5rem; font-weight: 700; color: var(--color-accent); }
+    .team-card h3 { font-size: 1.1rem; font-weight: 600; color: var(--color-white); margin-bottom: 0.25rem; }
+    .team-card .role { font-size: 0.8rem; font-weight: 500; color: var(--color-accent); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 1rem; }
+    .team-card p { color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.7; }
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .value-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.25rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; }
+    .value-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--color-accent-dim); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .value-icon svg { width: 18px; height: 18px; stroke: var(--color-accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .value-item h4 { font-size: 0.95rem; font-weight: 600; color: var(--color-white); margin-bottom: 0.25rem; }
+    .value-item p { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; }
+    footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: 0.8rem; }
     @media (max-width: 768px) {
-      .menu-toggle {
-        display: flex;
-      }
-
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        flex-direction: column;
-        background: rgba(10, 10, 15, 0.95);
-        backdrop-filter: blur(12px);
-        padding: 1.5rem 2rem;
-        gap: 1.25rem;
-        border-bottom: 1px solid var(--color-border);
-      }
-
-      .nav-links.active {
-        display: flex;
-      }
-
-      .about-content {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-      }
-
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
+      .menu-toggle { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; flex-direction: column; background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(12px); padding: 1.5rem 2rem; gap: 1.25rem; border-bottom: 1px solid var(--color-border); }
+      .nav-links.active { display: flex; }
+      .about-content { grid-template-columns: 1fr; gap: 2.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-
   <nav>
     <div class="logo">Phantom <span>Power</span></div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#services">Services</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#team">Team</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
@@ -392,7 +103,6 @@
     <p class="section-label">What We Do</p>
     <h2 class="section-title">Our Services</h2>
     <p class="section-subtitle">Tailored strategies built around your family's unique goals, timeline, and values.</p>
-
     <div class="services-grid">
       <div class="service-card">
         <div class="service-icon">
@@ -401,7 +111,6 @@
         <h3>Consulting</h3>
         <p>Strategic advisory for complex family structures, governance frameworks, succession planning, and operational efficiency. We help you make informed decisions with clarity and confidence.</p>
       </div>
-
       <div class="service-card">
         <div class="service-icon">
           <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
@@ -409,7 +118,6 @@
         <h3>Investment</h3>
         <p>Disciplined portfolio construction across public markets, private equity, venture, and real assets. We source and manage opportunities aligned with your risk tolerance and return objectives.</p>
       </div>
-
       <div class="service-card">
         <div class="service-icon">
           <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 3h-8l-2 4h12z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
@@ -429,22 +137,55 @@
         <p>We operate as an extension of your family, providing institutional-grade capabilities with the personal attention that only a dedicated family office can deliver.</p>
       </div>
       <div class="stats">
-        <div class="stat-box">
-          <span class="number">20+</span>
-          <span class="label">Years of Experience</span>
-        </div>
-        <div class="stat-box">
-          <span class="number">100%</span>
-          <span class="label">Client Retention</span>
-        </div>
-        <div class="stat-box">
-          <span class="number">360&deg;</span>
-          <span class="label">Holistic Approach</span>
-        </div>
-        <div class="stat-box">
-          <span class="number">24/7</span>
-          <span class="label">Dedicated Access</span>
-        </div>
+        <div class="stat-box"><span class="number">20+</span><span class="label">Years of Experience</span></div>
+        <div class="stat-box"><span class="number">100%</span><span class="label">Client Retention</span></div>
+        <div class="stat-box"><span class="number">360&deg;</span><span class="label">Holistic Approach</span></div>
+        <div class="stat-box"><span class="number">24/7</span><span class="label">Dedicated Access</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="team">
+    <p class="section-label">About Us</p>
+    <h2 class="section-title">The People Behind Phantom Power</h2>
+    <p class="section-subtitle">A dedicated team of professionals united by a shared commitment to your family's legacy.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">DM</div>
+        <h3>David Marotte</h3>
+        <p class="role">Founder &amp; Principal</p>
+        <p>Visionary leader with deep expertise in family office strategy, multi-generational wealth planning, and institutional investment management.</p>
+        <a href="https://www.linkedin.com/in/davidmarotte" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:1rem;color:var(--color-accent);font-size:0.85rem;font-weight:500;text-decoration:none;border-bottom:1px solid var(--color-accent);padding-bottom:2px;transition:opacity 0.3s;">View LinkedIn Profile &rarr;</a>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">PP</div>
+        <h3>Advisory Team</h3>
+        <p class="role">Senior Advisors</p>
+        <p>Our senior advisors bring decades of combined experience across private equity, tax law, estate planning, and global markets.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">PP</div>
+        <h3>Operations</h3>
+        <p class="role">Client Services</p>
+        <p>Dedicated operations professionals ensuring seamless execution, reporting, and day-to-day management of all client affairs.</p>
+      </div>
+    </div>
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div><h4>Discretion</h4><p>Your privacy is paramount in everything we do.</p></div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div><h4>Long-Term Vision</h4><p>We think in decades, not quarters.</p></div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div><h4>Family First</h4><p>Every decision starts with your family's best interest.</p></div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div><h4>Performance</h4><p>Rigorous, disciplined pursuit of superior results.</p></div>
       </div>
     </div>
   </section>
@@ -458,15 +199,12 @@
     </div>
   </section>
 
-  <footer>
-    &copy; 2026 Phantom Power. All rights reserved.
-  </footer>
+  <footer>&copy; 2026 Phantom Power. All rights reserved.</footer>
 
   <script>
     document.getElementById('menuToggle').addEventListener('click', function () {
       document.getElementById('navLinks').classList.toggle('active');
     });
-
     document.querySelectorAll('.nav-links a').forEach(function (link) {
       link.addEventListener('click', function () {
         document.getElementById('navLinks').classList.remove('active');
