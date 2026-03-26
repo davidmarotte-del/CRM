@@ -331,6 +331,115 @@
       color: var(--color-bg);
     }
 
+    /* ── Team / About Us ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .team-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 2.25rem 2rem;
+      text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .team-card:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-4px);
+    }
+
+    .team-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--color-accent-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-accent);
+    }
+
+    .team-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-white);
+      margin-bottom: 0.25rem;
+    }
+
+    .team-card .role {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .team-card p {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+    }
+
+    .value-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--color-accent-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .value-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--color-accent);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .value-item h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-white);
+      margin-bottom: 0.25rem;
+    }
+
+    .value-item p {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
     /* ── Footer ── */
     footer {
       text-align: center;
@@ -372,6 +481,14 @@
       .services-grid {
         grid-template-columns: 1fr;
       }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -383,6 +500,7 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#services">Services</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#team">Team</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
@@ -459,6 +577,76 @@
         <div class="stat-box">
           <span class="number">24/7</span>
           <span class="label">Dedicated Access</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us / Team -->
+  <section id="team">
+    <p class="section-label">About Us</p>
+    <h2 class="section-title">The People Behind Phantom Power</h2>
+    <p class="section-subtitle">A dedicated team of professionals united by a shared commitment to your family's legacy.</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">DM</div>
+        <h3>David Marotte</h3>
+        <p class="role">Founder & Principal</p>
+        <p>Visionary leader with deep expertise in family office strategy, multi-generational wealth planning, and institutional investment management.</p>
+        <a href="https://www.linkedin.com/in/davidmarotte" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:1rem;color:var(--color-accent);font-size:0.85rem;font-weight:500;text-decoration:none;border-bottom:1px solid var(--color-accent);padding-bottom:2px;transition:opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">View LinkedIn Profile &rarr;</a>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">PP</div>
+        <h3>Advisory Team</h3>
+        <p class="role">Senior Advisors</p>
+        <p>Our senior advisors bring decades of combined experience across private equity, tax law, estate planning, and global markets.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">PP</div>
+        <h3>Operations</h3>
+        <p class="role">Client Services</p>
+        <p>Dedicated operations professionals ensuring seamless execution, reporting, and day-to-day management of all client affairs.</p>
+      </div>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h4>Discretion</h4>
+          <p>Your privacy is paramount in everything we do.</p>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <h4>Long-Term Vision</h4>
+          <p>We think in decades, not quarters.</p>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <h4>Family First</h4>
+          <p>Every decision starts with your family's best interest.</p>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div>
+          <h4>Performance</h4>
+          <p>Rigorous, disciplined pursuit of superior results.</p>
         </div>
       </div>
     </div>
